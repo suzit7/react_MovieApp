@@ -1,35 +1,40 @@
 const initialApiCall = {
-    loading : false,
-    posts : []
-}
+  loading: false,
+  posts: [],
+  // id :[]
+};
 
-const apiCallReducers = (state = initialApiCall, action)=>{
-    switch(action.type){
+const apiCallReducers = (state = initialApiCall, action) => {
+  switch (action.type) {
+    case "LOAD_POST_START":
+      return {
+        ...state,
+        loading: true,
+      };
 
+    case "LOAD_POST_SUCCESS":
+      return {
+        ...state,
+        posts: action.payload,
+        id: action.id,
+      };
 
-        case "LOAD_POST_START":
-            return{
-                ...state,
-                loading : true,
-            }
+    default:
+      return state;
+  }
+};
 
-        case "LOAD_POST_SUCCESS":
-            return{
-                ...state,
-                posts : action.payload
-            }
+export const moviedetailsreducers = (state = {}, { type, payload }) => {
+  switch (type) {
+    case "LOAD_POST_DETAILS":
+      return {
+        ...state,
+        ...payload,
+      };
 
-          
-            default :
-            return state;
-    }
-}
+    default:
+      return state;
+  }
+};
 
-
-
-
-
-
-
-
-export {apiCallReducers}
+export { apiCallReducers };

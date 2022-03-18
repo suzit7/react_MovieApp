@@ -1,24 +1,37 @@
 import React from "react";
 import { useStyles } from "./Style";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Button } from "@mui/material";
 // import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system";
 // import ImageAvatars from "./Avatar";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import HoverRating from "./Reviewcomp";
+
+
+import { useAuth } from './firebase';    //New
 
 // import { Box } from "@mui/system";
+// import FormDialog from "./Dialog";
+
+
+
 
 
 const key = '900505d8';
 const Details = (props)=>{
     const classes = useStyles();
 
+    const currentUser = useAuth();  //New
+
 
 const [movieInfo, setMovieInfo] = useState();
   // const { selectedMovie } = props;
 
   useEffect(() => {
+
+    // console.log(`https://www.omdbapi.com/?i=${props.selectedMovie}&apikey=${key}`)
+
     axios.get(
       `https://www.omdbapi.com/?i=${props.selectedMovie}&apikey=${key}`
     ).then((response) => setMovieInfo(response.data));
@@ -53,7 +66,24 @@ const [movieInfo, setMovieInfo] = useState();
         <Box border = "null" className={classes.detailimage}>
 
         <img src = {movieInfo?.Poster} alt = "asd" className ={classes.img}/>
+        
 </Box>
+<div style = {{marginLeft : '70px' }}>
+{/* <Reviewcomp/>
+ */}
+<div style = {{marginTop : '50px'}}>
+ {currentUser !== null ? <HoverRating/> : 
+
+        
+        <Button variant="contained" color="error" >Sign in to Rate ⭐️</Button>
+        
+       
+        
+        }
+        </div>
+
+
+</div>
         </Grid>
 
         <Grid item md={9} spacing = {6}>
@@ -77,13 +107,18 @@ const [movieInfo, setMovieInfo] = useState();
 <h1 style = {{marginLeft : '50px'}}>Overview : 
 {movieInfo?.Plot}</h1>
 </Box>
-<br/>
+
+{/* <Reviewcomp/> */}
 <br/>
 
 <Box border = "null">
 <h1 style = {{marginLeft : '50px'}}>Casts : </h1>
 <h2 style = {{marginLeft : '50px'}}>{movieInfo?.Actors}</h2>
 {/* <ImageAvatars/> */}
+{/* <h1 style = {{marginLeft : '50px'}}>Rating :<Reviewcomp/> </h1> */}
+
+
+
 
 </Box>
 
@@ -93,6 +128,7 @@ const [movieInfo, setMovieInfo] = useState();
 
     </Grid>
     </div>
+    
 
 
         </>

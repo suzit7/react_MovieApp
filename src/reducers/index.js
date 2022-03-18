@@ -1,9 +1,9 @@
-import { apiCallReducers } from './moviereducers';
-import {combineReducers} from 'redux';
-
+import { apiCallReducers, moviedetailsreducers } from "./moviereducers";
+import { combineReducers } from "redux";
 
 const rootReducers = combineReducers({
-apiCallReducers
+  apiCallReducers,
+  moviedetailsreducers,
 });
 
 export default rootReducers;
